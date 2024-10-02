@@ -10,7 +10,7 @@ $app = AppFactory::create();
 
 $app->addErrorMiddleware(true, true, true);
 
-$app->get('/', function($request, $response) {
+$app->get('/', function ($request, $response) {
     $response->getBody()->write('Hexlet project 3');
     return $response;
 });
