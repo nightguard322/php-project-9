@@ -1,0 +1,23 @@
+<?php include_once('/_header.phtml') ?>
+<h1>Сайты</h1>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Последняя проверка</th>
+            <th>Код ответа</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($urls as $url): ?>
+            <tr>
+                <td><?= $url->getId() ?></td>
+                <td><?= $url->getName() ?></td>
+                <td></td>
+                <td></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php include_once('/_footer.phtml') ?>

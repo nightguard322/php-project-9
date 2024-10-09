@@ -6,7 +6,12 @@
     "autoload": {
         "psr-4": {
             "Hexlet\\Code\\": "src/"
-        }
+        },
+        "files": [
+            "src/Site.php",
+            "src/SiteRepositry.php",
+            "src/Validator.php"
+        ]
     },
     "authors": [
         {
