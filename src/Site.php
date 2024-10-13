@@ -4,7 +4,7 @@ namespace Hexlet\Project;
 
 class Site
 {
-    private ?int $id;
+    private ?int $id = null;
     private ?string $name;
     private ?string $createdAt;
 
@@ -12,8 +12,9 @@ class Site
     {
         [$name, $createdAt] = $data;
         $site = new self();
-        $site->setTitle($name);
+        $site->setName($name);
         $site->setCreatedAt($createdAt);
+        return $site;
     }
 
     public function getId(): ?int
@@ -42,7 +43,7 @@ class Site
         $this->name = $name;
     }
 
-    public function setCreatedAt(int $createdAt): void
+    public function setCreatedAt(string $createdAt): void
     {
         $this->createdAt = $createdAt;
     }

@@ -25,7 +25,7 @@ class SiteRepositry
 
     public function find($id): ?Site
     {
-        $stmt = $conn->prepare('SELECT * FROM urls WHERE id = :id');
+        $stmt = $this->conn->prepare('SELECT * FROM urls WHERE id = :id');
         $stmt->execute([$id]);
         if ($row = $stmt->fetch()) {
             $site = Site::fromArray([$row['name'], $row['createdAt']]);
@@ -53,6 +53,8 @@ class SiteRepositry
                 $site->getCreatedAt()
             ]
         );
+        $id = $this->conn->lastInsertId();
+        $site->setId($id);
     }
 
     public function update(Site $site)

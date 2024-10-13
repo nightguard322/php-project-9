@@ -1,6 +1,6 @@
 include_once('/_header.phtml');
 <h1>Сайт: <?= $url->getName() ?></h1>
-<table class="table">
+<table class="table" data-test="url">
     <tbody>
         <tr>
             <td>ID</th>
@@ -20,7 +20,7 @@ include_once('/_header.phtml');
 <form action="/urls/<?= $url->getId() ?>/checks" method="post">
     <input type="submit" value="Запустить проверку" class="btn btn-primary">
 </form>
-<table class="table">
+<table class="table" data-test="checks">
     <thead>
         <tr>
             <th>ID</th>
