@@ -1,23 +1,25 @@
 <?php include_once('_header.phtml') ?>
-<h1>Сайты</h1>
-<table class="table table-bordered" data-test="urls">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Имя</th>
-            <th>Последняя проверка</th>
-            <th>Код ответа</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach($urls as $url): ?>
+<main class="container-lg mt-3">
+    <h1>Сайты</h1>
+    <table class="table table-bordered" data-test="urls">
+        <thead>
             <tr>
-                <td><?= $url->getId() ?></td>
-                <td><?= $url->getName() ?></td>
-                <td></td>
-                <td></td>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Последняя проверка</th>
+                <th>Код ответа</th>
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php foreach($urls as $url): ?>
+                <tr>
+                    <td><?= $url->getId() ?></td>
+                    <td><?= $url->getName() ?></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</main>
 <?php include_once('_footer.phtml') ?>

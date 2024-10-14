@@ -5,12 +5,14 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Hexlet\\Project\\": "src/"
+            "Hexlet\\Project\\": "src/",
+            "Hexlet\\Project\\Tests\\": "tests/"
         },
         "files": [
             "src/Site.php",
             "src/SiteRepositry.php",
-            "src/Validator.php"
+            "src/Validator.php",
+            "tests/Test.php"
         ]
     },
     "authors": [

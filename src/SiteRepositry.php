@@ -16,7 +16,7 @@ class SiteRepositry
         $sites = [];
         $stmt = $this->conn->query('SELECT * FROM urls');
         while($row = $stmt->fetch()) {
-            $site = Site::fromArray([$row['name'], $row['createdAt']]);
+            $site = Site::fromArray([$row['name'], $row['created_at']]);
             $site->setId($row['id']);
             $sites[] = $site;
         }
@@ -28,9 +28,19 @@ class SiteRepositry
         $stmt = $this->conn->prepare('SELECT * FROM urls WHERE id = :id');
         $stmt->execute([$id]);
         if ($row = $stmt->fetch()) {
-            $site = Site::fromArray([$row['name'], $row['createdAt']]);
+            $site = Site::fromArray([$row['name'], $row['created_at']]);
             $site->setId($row['id']);
             return $site;
+        }
+        return null;
+    }
+
+    public function findByName($name): ?int
+    {
+        $stmt = $this->conn->prepare('SELECT id FROM urls WHERE name = :name');
+        $stmt->execute([$name]);
+        if ($id = $stmt->fetchColumn()) {
+            return $id;
         }
         return null;
     }
