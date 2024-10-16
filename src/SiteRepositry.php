@@ -17,7 +17,11 @@ class SiteRepositry
         $stmt = $this->conn->query('SELECT * FROM urls');
         while($row = $stmt->fetch()) {
             $site = Site::fromArray([$row['name'], $row['created_at']]);
-            $site->setId($row['id']);
+            $id = $row['id'];
+            $site->setId($id);
+            $checker = new Checker($this->conn);
+            $checks = $checker->getChecks($id, true);
+            $site->setChecks($checks);
             $sites[] = $site;
         }
         return $sites;

@@ -7,6 +7,7 @@ class Site
     private ?int $id = null;
     private ?string $name;
     private ?string $createdAt;
+    private ?array $checks;
 
     public static function fromArray(array $data): Site
     {
@@ -33,6 +34,11 @@ class Site
         return $this->createdAt;
     }
 
+    public function getChecks(): array
+    {
+        return $this->checks;
+    }
+
     public function setId(int $id): void
     {
         $this->id = $id;
@@ -46,6 +52,11 @@ class Site
     public function setCreatedAt(string $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function setChecks(array $checks): void
+    {
+        $this->checks = $checks;
     }
 
     public function exists(): bool

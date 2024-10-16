@@ -15,8 +15,9 @@
                 <tr>
                     <td><?= $url->getId() ?></td>
                     <td><a href="urls/<?= $url->getId() ?>"><?= $url->getName() ?></a></td>
-                    <td></td>
-                    <td></td>
+                    <?php $checks = $url->getChecks() ?>
+                    <td><?= $checks['status_code'] ?></td>
+                    <td><?= $checks['created_at'] ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

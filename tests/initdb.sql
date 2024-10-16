@@ -1,5 +1,5 @@
+DROP TABLE IF EXISTS url_checks;
 DROP TABLE IF EXISTS urls;
-DROP TABLE IF EXISTS urls_checks;
 
 CREATE TABLE urls(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -7,9 +7,9 @@ CREATE TABLE urls(
     created_at TIMESTAMP NOT NULL UNIQUE
 );
 
-CREATE TABLE urls_checks(
+CREATE TABLE url_checks(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    url_id BIGINT REFERENCES urls(id) UNIQUE,
+    url_id BIGINT REFERENCES urls(id),
     status_code INTEGER NOT NULL,
     h1 VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
@@ -18,3 +18,10 @@ CREATE TABLE urls_checks(
 );
 
 INSERT INTO urls (name, created_at) VALUES ('http://google.com', '2024-10-14 10:00:00');
+INSERT INTO url_checks
+    (url_id, status_code, h1, title, description, created_at)
+VALUES
+    (1, 200, '', '', '', '2024-10-14 10:00:00'),
+    (1, 200, '', '', '', '2024-10-14 11:00:00'),
+    (1, 200, '', '', '', '2024-10-14 12:00:00')
+;

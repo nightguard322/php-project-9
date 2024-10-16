@@ -95,7 +95,7 @@ $app->post('/urls/{id}/checks', function ($request, $response, $args) {
     $url = $repo->find($args['id']);
     $checker = $this->get(Checker::class);
     $checker->makeCheck($id, $url->getName());
-    return $response->withHeader('Location', "/urls/{$id}");
+    return $response->withHeader('Location', "/urls/{$id}")->withStatus(303);
 });
 
 $app->run();

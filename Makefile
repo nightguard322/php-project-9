@@ -11,3 +11,5 @@ test:
 	./vendor/bin/phpunit tests/Test.php
 setEnv:
 	export DATABASE_URL=postgresql://sasha:12345@localhost:5432/urls
+initDB:
+	psql -a -d $DATABASE_URL -f database.sql

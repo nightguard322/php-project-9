@@ -35,6 +35,7 @@ class Test extends TestCase
         $body = $response->getBody()->getContents();
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('google.com', $body);
+        $this->assertStringContainsString('2024-10-14 12:00:00', $body);
     }
 
     public function testShow()

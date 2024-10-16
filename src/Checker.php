@@ -16,16 +16,20 @@ class Checker
         $this->client = new GuzzleHttp\Client();
     }
 
-    public function getChecks(int $id): ?array
+    public function getChecks(int $id, $onlyLast = false): ?array
     {
-        $checks = [];
         $stmt = $this->conn->prepare('SELECT * from url_checks WHERE url_id = :id');
         $stmt->execute([$id]);
+        if ($onlyLast) {
+            return $stmt->fetch();
+        }
+        $checks = [];
         while ($row = $stmt->fetch()) {
             $checks[] = $row;
         }
         return $checks;
     }
+
 
     public function makeCheck(int $id, string $url): bool
     {
@@ -36,7 +40,7 @@ class Checker
             'h1' => '',
             'title' => '',
             'description' => '',
-            'created_at' => Carbon::now()->toDateString()
+            'created_at' => Carbon::now()->toDateTimeString()
         ];
         $stmt = $this->conn->prepare(
             "INSERT INTO url_checks
@@ -52,7 +56,6 @@ class Checker
                 ':description' => $urlData['description'],
                 ':created_at' => $urlData['created_at']
         ]);
-        $stmt->execute([$id]);
         return true;
     }
 }

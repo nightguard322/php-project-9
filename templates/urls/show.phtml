@@ -39,6 +39,20 @@
                 <th>Дата создания</th>
             </tr>
         </thead>
+        <tbody>
+            <tr>
+            <?php foreach ($checks as $check) :?>
+                <tr>
+                    <td><?= $check['id']?></td>
+                    <td><?= $check['status_code']?></td>
+                    <td><?= $check['h1']?></td>
+                    <td><?= $check['title']?></td>
+                    <td><?= $check['description']?></td>
+                    <td><?= $check['created_at']?></td>
+                </tr>
+            <?php endforeach ;?>
+            </tr>
+        </tbody>
     </table>
 </main>
 <?php include_once('_footer.phtml') ?>
