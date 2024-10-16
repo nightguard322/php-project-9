@@ -4,9 +4,9 @@ namespace Hexlet\Project;
 
 class SiteRepositry
 {
-    private $conn;
+    private \PDO $conn;
 
-    public function __construct($conn)
+    public function __construct(\PDO $conn)
     {
         $this->conn = $conn;
     }

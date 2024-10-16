@@ -14,7 +14,7 @@
             <?php foreach($urls as $url): ?>
                 <tr>
                     <td><?= $url->getId() ?></td>
-                    <td><?= $url->getName() ?></td>
+                    <td><a href="urls/<?= $url->getId() ?>"><?= $url->getName() ?></a></td>
                     <td></td>
                     <td></td>
                 </tr>

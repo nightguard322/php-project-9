@@ -50,34 +50,26 @@ $app->get('/', function ($request, $response) {
 });
 
 $app->get('/urls', function ($request, $response) {
-    $siteRepositry = new SiteRepositry($this->get(\PDO::class));
-    $urls = $siteRepositry->getEntities();
+    $repo = new SiteRepositry($this->get(\PDO::class));
+    $urls = $repo->getEntities();
     $params = ['urls' => $urls];
     return $this->get('renderer')->render($response, 'urls/index.phtml', $params);
-});
-
-$app->get('/urls/{id}', function ($request, $response, $args) {
-    $siteRepositry = new SiteRepositry($this->get(\PDO::class));
-    $url = $siteRepositry->find($args['id']);
-    $flash = $this->get('flash')->getMessages();
-    $params = ['url' => $url, 'flash' => $flash];
-    return $this->get('renderer')->render($response, 'urls/show.phtml', $params);
 });
 
 $app->post('/urls', function ($request, $response) {
     $urlData = $request->getParsedBody();
     $url = $urlData['url'];
-    $siteRepositry = new SiteRepositry($this->get(\PDO::class));
+    $repo = $this->get(SiteRepositry::class);
     $validator = new Validator();
     $errors = $validator->validate($url);
     if (empty($errors)) {
-        $id = $siteRepositry->findByName($url['name']);
+        $id = $repo->findByName($url['name']);
         if ($id) {
             $this->get('flash')->addMessage('success', 'Страница уже существует');
         } else {
             $date = Carbon::now()->toDateTimeString();
             $site = Site::fromArray([$url['name'], $date]);
-            $siteRepositry->save($site);
+            $repo->save($site);
             $id = $site->getId();
             $this->get('flash')->addMessage('success', 'Страница успешно добавлена');
         }
@@ -85,6 +77,25 @@ $app->post('/urls', function ($request, $response) {
     };
     $params = ['data' => $url['name'], 'errors' => $errors];
     return $this->get('renderer')->render($response, 'index.phtml', $params);
+});
+
+$app->get('/urls/{id}', function ($request, $response, $args) {
+    $repo = $this->get(SiteRepositry::class);
+    $url = $repo->find($args['id']);
+    $checker = $this->get(Checker::class);
+    $checks = $checker->getChecks($args['id']);
+    $flash = $this->get('flash')->getMessages();
+    $params = ['url' => $url, 'flash' => $flash, 'checks' => $checks];
+    return $this->get('renderer')->render($response, 'urls/show.phtml', $params);
+});
+
+$app->post('/urls/{id}/checks', function ($request, $response, $args) {
+    $id = $args['id'];
+    $repo = $this->get(SiteRepositry::class);
+    $url = $repo->find($args['id']);
+    $checker = $this->get(Checker::class);
+    $checker->makeCheck($id, $url->getName());
+    return $response->withHeader('Location', "/urls/{$id}");
 });
 
 $app->run();
