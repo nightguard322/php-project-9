@@ -8,14 +8,10 @@ use Slim\Factory\AppFactory;
 use DI\Container;
 use Slim\Middleware\MethodOverrideMiddleware;
 use Carbon\Carbon;
-
-$databaseUrl = parse_url($_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL'));
-$dbcreds = [
-    'username' => $databaseUrl['user'],
-    'password' => $databaseUrl['pass'],
-    'hostname' => $databaseUrl['host'],
-    'dbname' => ltrim($databaseUrl['path'], '/')
-];
+use Valitron\Validator;
+use Valitron\Validators\String\Email;
+use Valitron\Validators\String\Required;
+use Valitron\Validators\String\MinLength;
 
 $container = new Container();
 
@@ -27,14 +23,8 @@ $container->set('flash', function () {
     return new \Slim\Flash\Messages();
 });
 
-$container->set(\PDO::class, function () use ($dbcreds) {
-    $conn = new \PDO(
-        "pgsql:dbname={$dbcreds['dbname']} host={$dbcreds['hostname']}",
-        $dbcreds['username'],
-        $dbcreds['password']
-    );
-    $conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-    return $conn;
+$container->set(\PDO::class, function () {
+    return Connector::get()->connect();
 });
 
 $app = AppFactory::createFromContainer($container);
@@ -60,9 +50,9 @@ $app->post('/urls', function ($request, $response) {
     $urlData = $request->getParsedBody();
     $url = $urlData['url'];
     $repo = $this->get(SiteRepositry::class);
-    $validator = new Validator();
-    $errors = $validator->validate($url);
-    if (empty($errors)) {
+    $v = new Validator($url);
+    $v->rule('required', "name")->rule('url', "name")->rule('lengthMax', "name", 255);
+    if ($v->validate()) {
         $id = $repo->findByName($url['name']);
         if ($id) {
             $this->get('flash')->addMessage('success', 'Страница уже существует');
@@ -75,7 +65,7 @@ $app->post('/urls', function ($request, $response) {
         }
         return $response->withHeader('Location', "urls/{$id}")->withStatus(303);
     };
-    $params = ['data' => $url['name'], 'errors' => $errors];
+    $params = ['data' => $url['name'], 'errors' => $v->errors()];
     return $this->get('renderer')->render($response, 'index.phtml', $params);
 });
 

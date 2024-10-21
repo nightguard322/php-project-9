@@ -10,6 +10,7 @@
                             <label for="text" class="visually-hidden"></label>
                             <input type="text" name="url[name]" id="text" class="form-control form-control-lg <?= !empty($errors) ? 'is-invalid' : '' ?> " placeholder="https://www.example.com" value=<?=$data?>>
                             <?php foreach($errors as $error) :?>
+                                <?php dd($error) ?>
                                 <div class="invalid-feedback"><?= $error?></div>
                             <?php endforeach ;?>
                         </div>

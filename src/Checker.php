@@ -20,20 +20,25 @@ class Checker
     {
         $stmt = $this->conn->prepare('SELECT * from url_checks WHERE url_id = :id');
         $stmt->execute([$id]);
-        if ($onlyLast) {
-            return $stmt->fetch();
-        }
         $checks = [];
         while ($row = $stmt->fetch()) {
             $checks[] = $row;
         }
-        return $checks;
+        return $onlyLast ? array_pop($checks) : $checks;
     }
-
 
     public function makeCheck(int $id, string $url): bool
     {
-        $response = $this->client->request('GET', $url);
+        try {
+            $response = $this->client->request('GET', $url);
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            echo 'Ошибка при выполнении HTTP-запроса: ', $e->getMessage(), PHP_EOL;
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            echo 'Ошибка при отправке HTTP-запроса: ', $e->getMessage(), PHP_EOL;
+        } catch (\Exception $e) {
+            echo 'Неизвестная ошибка: ', $e->getMessage(), PHP_EOL;
+        }
+        
         $urlData = [
             'url_id' => $id,
             'status_code' => $response->getStatusCode(),

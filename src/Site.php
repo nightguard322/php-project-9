@@ -34,7 +34,7 @@ class Site
         return $this->createdAt;
     }
 
-    public function getChecks(): array
+    public function getChecks()
     {
         return $this->checks;
     }
@@ -54,7 +54,7 @@ class Site
         $this->createdAt = $createdAt;
     }
 
-    public function setChecks(array $checks): void
+    public function setChecks($checks): void
     {
         $this->checks = $checks;
     }

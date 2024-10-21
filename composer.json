@@ -11,7 +11,8 @@
         "files": [
             "src/Site.php",
             "src/SiteRepositry.php",
-            "src/Validator.php",
+            "src/Connector.php",
+            "src/Checker.php",
             "tests/Test.php"
         ]
     },
@@ -30,7 +31,8 @@
         "illuminate/support": "^11.26",
         "nesbot/carbon": "^3.8",
         "slim/flash": "^0.4.0",
-        "guzzlehttp/guzzle": "^7.9"
+        "guzzlehttp/guzzle": "^7.9",
+        "vlucas/valitron": "^1.4"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.10",
