@@ -32,7 +32,7 @@ class Checker
         try {
             $response = $this->client->request('GET', $url);
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            echo 'Ошибка при выполнении HTTP-запроса: ', $e->getMessage(), PHP_EOL;
+            echo 'Произошла ошибка при проверке, не удалось подключиться', PHP_EOL;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             echo 'Ошибка при отправке HTTP-запроса: ', $e->getMessage(), PHP_EOL;
         } catch (\Exception $e) {

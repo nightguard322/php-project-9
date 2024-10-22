@@ -51,7 +51,10 @@ $app->post('/urls', function ($request, $response) {
     $url = $urlData['url'];
     $repo = $this->get(SiteRepositry::class);
     $v = new Validator($url);
-    $v->rule('required', "name")->rule('url', "name")->rule('lengthMax', "name", 255);
+    $v->rule('required', "name")->message('URL не должен быть пустым')
+        ->rule('url', "name")->message('Некорректный URL')
+        ->rule('lengthMax', "name", 255)->message('Некорректный URL')
+        ->stopOnFirstFail();
     if ($v->validate()) {
         $id = $repo->findByName($url['name']);
         if ($id) {
