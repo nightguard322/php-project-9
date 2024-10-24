@@ -46,7 +46,7 @@ $app->get('/urls', function ($request, $response) {
     return $this->get('renderer')->render($response, 'urls/index.phtml', $params);
 });
 
-$app->post('/urls', function ($request, $response) {
+$app->post('/urls', function ($request, $response) use ($router) {
     $urlData = $request->getParsedBody();
     $url = $urlData['url'];
     $repo = $this->get(SiteRepositry::class);
@@ -66,7 +66,8 @@ $app->post('/urls', function ($request, $response) {
             $id = $site->getId();
             $this->get('flash')->addMessage('success', 'Страница успешно добавлена');
         }
-        return $response->withHeader('Location', "urls/{$id}")->withStatus(303);
+        $redirect = $router->urlFor($url, ['id' => $id]);
+        return $response->withHeader('Location', $redirect)->withStatus(303);
     };
     $params = ['data' => $url['name'], 'errors' => $v->errors()];
     return $this->get('renderer')->render($response, 'index.phtml', $params);
@@ -80,15 +81,16 @@ $app->get('/urls/{id}', function ($request, $response, $args) {
     $flash = $this->get('flash')->getMessages();
     $params = ['url' => $url, 'flash' => $flash, 'checks' => $checks];
     return $this->get('renderer')->render($response, 'urls/show.phtml', $params);
-});
+})->setName('url');
 
-$app->post('/urls/{id}/checks', function ($request, $response, $args) {
+$app->post('/urls/{id}/checks', function ($request, $response, $args) use ($router) {
     $id = $args['id'];
     $repo = $this->get(SiteRepositry::class);
     $url = $repo->find($args['id']);
     $checker = $this->get(Checker::class);
     $checker->makeCheck($id, $url->getName());
-    return $response->withHeader('Location', "/urls/{$id}")->withStatus(303);
+    $redirect = $router->urlFor($url, ['id' => $id]);
+    return $response->withHeader('Location', $redirect)->withStatus(303);
 });
 
 $app->run();

@@ -25,7 +25,7 @@ class Site
 
     public function getName(): ?string
     {
-        
+
         return $this->name;
     }
 
@@ -63,5 +63,4 @@ class Site
     {
         return !is_null($this->id);
     }
-
 }

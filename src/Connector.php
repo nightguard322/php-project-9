@@ -2,8 +2,6 @@
 
 namespace Hexlet\Project;
 
-use \PDO;
-
 final class Connector
 {
     private static $conn = null;
@@ -11,7 +9,6 @@ final class Connector
 
     private function __construct()
     {
-
     }
 
     public function connect()
@@ -28,7 +25,7 @@ final class Connector
         );
         $conStrTest = 'sqlite:database.sqlite';
         $conStr = $this->test ? $conStrTest : $conStrPg;
-        
+
         $pdo = new \PDO($conStr);
         $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
 

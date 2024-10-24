@@ -38,7 +38,7 @@ class Checker
         } catch (\Exception $e) {
             echo 'Неизвестная ошибка: ', $e->getMessage(), PHP_EOL;
         }
-        
+
         $urlData = [
             'url_id' => $id,
             'status_code' => $response->getStatusCode(),
