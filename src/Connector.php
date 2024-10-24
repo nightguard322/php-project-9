@@ -14,6 +14,7 @@ final class Connector
     public function connect()
     {
         $params = parse_url($_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL'));
+        var_dump($params);
         $params['dbname'] = ltrim($params['path'], '/');
         $conStrPg = sprintf(
             "pgsql:host=%s;port=%d;dbname=%s;user=%s;password=%s",
@@ -24,7 +25,7 @@ final class Connector
             $params['pass']
         );
         $conStrTest = 'sqlite:database.sqlite';
-        $conStr = $this->test ? $conStrTest : $conStrPg;
+        $conStr = self::$test ? $conStrTest : $conStrPg;
 
         $pdo = new \PDO($conStr);
         $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
