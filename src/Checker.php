@@ -81,8 +81,10 @@ class Checker
                     return false;
                 }
                 $message = $messages['warning'];
+            } else {
+                return $messages['danger'];
             }
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+        } catch (\Exception $e) {
             return $messages['danger'];
         }
             $document = isset($body) ? new Document($body) : new Document($url, true);
