@@ -91,7 +91,7 @@ class Checker
             /** @var \DiDom\Element $title */
             $title = optional($document->first('title'));
             /** @var \DiDom\Element $description */
-            $description = optional($document->first('description'));
+            $description = optional($document->first('meta[name=description]'));
             $urlData = [
                 'url_id' => $id,
                 'status_code' => $response->getStatusCode(),
