@@ -22,9 +22,9 @@ class Site
      * [Description for fromArray]
      *
      * @param array<string> $data
-     * 
+     *
      * @return Site
-     * 
+     *
      */
     public static function fromArray(array $data): Site
     {

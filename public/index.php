@@ -84,7 +84,7 @@ $app->post('/urls/{id}/checks', function ($request, $response, $args) use ($rout
     $id = $args['id'];
     $repo = $this->get(SiteRepositry::class);
     $url = $repo->find($args['id']);
-    $checker = $this->get(Checker::class);  
+    $checker = $this->get(Checker::class);
     $status = $checker->makeCheck($id, $url->getName()); //??????
     if (!$status) {
         return $this->get('renderer')->render($response, '404.phtml', []);

@@ -16,24 +16,24 @@ class Checker
      *
      * @var \PDO
      */
-    private \PDO $_conn;
+    private \PDO $conn;
     /**
      * [Description for $client]
      *
      * @var GuzzleHttp\Client
      */
-    private GuzzleHttp\Client $_client;
+    private GuzzleHttp\Client $client;
 
     /**
      * [Description for __construct]
      *
      * @param \PDO $conn
-     * 
+     *
      */
     public function __construct(\PDO $conn)
     {
-        $this->_conn = $conn;
-        $this->_client = new GuzzleHttp\Client();
+        $this->conn = $conn;
+        $this->client = new GuzzleHttp\Client();
     }
 
     /**
@@ -43,7 +43,7 @@ class Checker
      */
     public function getChecks(int $id, bool $onlyLast = false): array
     {
-        $stmt = $this->_conn->prepare('SELECT * from url_checks WHERE url_id = :id');
+        $stmt = $this->conn->prepare('SELECT * from url_checks WHERE url_id = :id');
         $stmt->execute([$id]);
         $checks = [];
         while ($row = $stmt->fetch()) {
@@ -62,16 +62,16 @@ class Checker
     public function makeCheck(int $id, string $url): array|false
     {
         $messages = [
-            'success' => 
+            'success' =>
                 ['success','Страница успешно проверена'],
-            'warning' => 
+            'warning' =>
                 ['warning', 'Проверка была выполнена успешно, но сервер ответил с ошибкой'],
-            'danger' => 
+            'danger' =>
                 ['danger','Произошла ошибка при проверке, не удалось подключиться']
         ];
         $message = $messages['success'];
         try {
-            $response = $this->_client->request('GET', $url);
+            $response = $this->client->request('GET', $url);
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             if ($e->hasResponse()) {
                 /** @var \Psr\Http\Message\ResponseInterface $response */
@@ -100,7 +100,7 @@ class Checker
                 'description' => $description->attr('content'),
                 'created_at' => Carbon::now()->toDateTimeString()
             ];
-            $stmt = $this->_conn->prepare(
+            $stmt = $this->conn->prepare(
                 "INSERT INTO url_checks
                 (url_id, status_code, h1, title, description, created_at)
                 VALUES

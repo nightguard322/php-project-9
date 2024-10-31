@@ -15,7 +15,7 @@ class SiteRepositry
      * [Description for getEntities]
      *
      * @return array<Site>
-     * 
+     *
      */
     public function getEntities(): array
     {
@@ -24,7 +24,7 @@ class SiteRepositry
         if ($stmt) {
             while ($row = $stmt->fetch()) {
                 /**
-                 * @var array{name:string, created_at:string, id:int} $row 
+                 * @var array{name:string, created_at:string, id:int} $row
                  */
                 $site = Site::fromArray([$row['name'], $row['created_at']]);
                 $id = $row['id'];
@@ -42,9 +42,9 @@ class SiteRepositry
      * [Description for find]
      *
      * @param int $id
-     * 
+     *
      * @return Site|null
-     * 
+     *
      */
     public function find(int $id): ?Site
     {
@@ -53,7 +53,7 @@ class SiteRepositry
         if ($stmt) {
             if ($row = $stmt->fetch()) {
                 /**
-                 * @var array{name:string, created_at:string, id:int} $row 
+                 * @var array{name:string, created_at:string, id:int} $row
                  */
                 $site = Site::fromArray([$row['name'], $row['created_at']]);
                 $site->setId($row['id']);
@@ -67,9 +67,9 @@ class SiteRepositry
      * [Description for findByName]
      *
      * @param string $name
-     * 
+     *
      * @return int<min, -1>|int<1, max>|null
-     * 
+     *
      */
     public function findByName(string $name): ?int
     {
