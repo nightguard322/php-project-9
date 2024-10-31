@@ -1,0 +1,42 @@
+{
+    "name": "hexlet/code",
+    "description": "project 3",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Project\\": "src/"
+        },
+        "files": [
+            "src/Site.php",
+            "src/SiteRepositry.php",
+            "src/Connector.php",
+            "src/Checker.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "sasha"
+        }
+    ],
+    "require": {
+        "slim/slim": "^4.14",
+        "slim/psr7": "^1.7",
+        "slim/http": "^0.4.0",
+        "slim/php-view": "^3.4",
+        "php-di/php-di": "^7.0",
+        "squizlabs/php_codesniffer": "*",
+        "illuminate/support": "^11.29",
+        "nesbot/carbon": "^3.8",
+        "slim/flash": "^0.4.0",
+        "guzzlehttp/guzzle": "^7.9",
+        "vlucas/valitron": "^1.4",
+        "imangazaliev/didom": "^2.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.10",
+        "symfony/var-dumper": "^7.1",
+        "phpunit/phpunit": "^11.4",
+        "phpstan/phpstan": "^1.12"
+    }
+}
